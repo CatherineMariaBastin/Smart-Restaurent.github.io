@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Restaurant AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>🍽️ Welcome to Smart Restaurant AI</h1>
+    <button onclick="getRecommendation()">🔍 Get Dish Recommendation</button>
+    <p id="recommendation"></p>
+
+    <button onclick="placeVoiceOrder()">🎙️ Place Voice Order</button>
+    <p id="order-status"></p>
+
+    <script>
+        function getRecommendation() {
+            fetch('/recommend')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('recommendation').innerText = "Recommended Dish: " + data.recommended_dish;
+                });
+        }
+
+        function placeVoiceOrder() {
+            fetch('/voice_order', { method: 'POST' })
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('order-status').innerText = "Order: " + data.order;
+                });
+        }
+    </script>
+</body>
+</html>
